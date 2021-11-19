@@ -75,8 +75,8 @@
       <button>Console Warn</button>
       <button>Console Assert</button>
       <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
+      <button id>Console Dir</button>
+      <button id>Console dirxml</button>
       <button>Console Group Start</button>
       <button>Console Group End</button>
       <button>Console Table</button>
@@ -87,7 +87,17 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+                        
+
   <script>
+    window.TrackJS && TrackJS.install({ 
+    token: "3fe09e8f6301454c9ad3bdd939b46bf8"
+    // for more configuration options, see https://docs.trackjs.com
+    });
+    TrackJS.track('Testing TrackJS!');
+
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -102,6 +112,106 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    
+    errorBtns[0].addEventListener('click', function(e) {
+      console.log("Console Log Demo");
+    });
+
+    errorBtns[1].addEventListener('click', function(e){
+      console.error("Console Error Demo");
+    });
+
+    let count = 0;
+    errorBtns[2].addEventListener('click', function(e){
+      console.log("Count Button: " + (++count));
+    });
+
+    errorBtns[3].addEventListener('click', function(e){
+      console.warn("Console Warn Button");
+    });
+
+    let number = 2;
+    errorBtns[4].addEventListener('click', function(e){
+      console.assert(number === 3, {number: number, errorMsg:"The number does not equal 3"});
+    });
+
+    errorBtns[5].addEventListener('click', function(e){
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener('click', function(e){
+      console.dir(this);
+    });
+
+    errorBtns[7].addEventListener('click',function(e){
+      console.dirxml(this);
+    });
+
+    errorBtns[8].addEventListener('click',function(e){
+      console.group();
+    });
+
+    errorBtns[9].addEventListener('click',function(e){
+      console.groupEnd();
+    });
+
+    errorBtns[10].addEventListener('click',function(e){
+      console.table(["Software Engineering","Programming Languages","Advanced Software Engineering"]);
+    });
+
+    errorBtns[11].addEventListener('click',function(e){
+      console.time("Timer Button");
+    });
+
+    errorBtns[12].addEventListener('click',function(e){
+      console.timeEnd("Timer Button");
+    });
+
+    errorBtns[13].addEventListener('click',function(e){
+      function secondFunction(){
+        console.trace();
+      }
+      secondFunction();
+    });
+    errorBtns[14].addEventListener('click',function(e){
+      console.log(boom);
+    });
+
+
+    //STEP 3 TRY CATCH FINALLY THROW
+    try {
+      throw error;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      console.log("Finally Test");
+    }
+
+    //STEP 4 THROW CUSTOM ERROR
+    class CustomError extends Error {
+      constructor(message) {
+        super(message); 
+        this.name = "Sussy Custom Error";
+        console.error(message);
+      }
+    }
+    function throwError () {
+      throw new CustomError("sadly an error happened my friend");
+    }
+
+    try {
+      throwError();
+    }
+    catch(err) {
+      console.log("Whee our custom error threw!");
+    }
+
+    //STEP 5 AJAX
+    if (window.onerror) {
+      let newErrorHandler = console.log("caught the error");
+      window.onerror = newErrorHandler;
+    }
+
   </script>
 </body>
 
